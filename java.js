@@ -1,10 +1,11 @@
+// Admin Password Store
 let adminPassword = localStorage.getItem('ab_admin_password') || 'admin123';
 
-// Fixed Header Update Function preserving HTML styling
+// Updates site header content dynamically by ID
 function updateSiteHeader(logoText, badgeText, headingText) {
     if (logoText) {
         const logoEl = document.getElementById('site-logo');
-        if (logoEl) logoEl.innerHTML = logoText;
+        if (logoEl) logoEl.innerText = logoText;
     }
     if (badgeText) {
         const badgeEl = document.getElementById('badge-pill');
@@ -12,50 +13,28 @@ function updateSiteHeader(logoText, badgeText, headingText) {
     }
     if (headingText) {
         const headingEl = document.getElementById('core-expertise-heading');
-        if (headingEl) headingEl.innerHTML = headingText;
+        if (headingEl) headingEl.innerText = headingText;
     }
 }
 
-// Navigation & Theme Toggles
+// Mobile Navigation Toggle
 function toggleMobileMenu() {
     const menu = document.getElementById('mobile-menu');
     if (menu) menu.classList.toggle('hidden');
 }
 
-document.getElementById('mobile-menu-btn')?.addEventListener('click', toggleMobileMenu);
-
-const themeToggleBtn = document.getElementById('theme-toggle');
-const themeIcon = document.getElementById('theme-icon');
-
-themeToggleBtn?.addEventListener('click', () => {
-    const isDark = document.documentElement.classList.toggle('dark');
-    document.documentElement.classList.toggle('light', !isDark);
-    if (themeIcon) themeIcon.className = isDark ? 'fa-solid fa-moon text-base' : 'fa-solid fa-sun text-base';
-    localStorage.setItem('ab_theme', isDark ? 'dark' : 'light');
-});
-
-if (localStorage.getItem('ab_theme') === 'light') {
-    document.documentElement.classList.remove('dark');
-    document.documentElement.classList.add('light');
-    if (themeIcon) themeIcon.className = 'fa-solid fa-sun text-base';
-}
-
-// Admin Auth Modal Functions with class switching
+// Admin Password Auth Modal Controls
 function openAdminAuthModal() {
     const modal = document.getElementById('admin-auth-modal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-    }
-    document.getElementById('admin-auth-error')?.classList.add('hidden');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.getElementById('admin-auth-error').classList.add('hidden');
 }
 
 function closeAdminAuthModal() {
     const modal = document.getElementById('admin-auth-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    }
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
 }
 
 function verifyAdminPassword() {
@@ -64,40 +43,29 @@ function verifyAdminPassword() {
         closeAdminAuthModal();
         openAdminPanel();
     } else {
-        document.getElementById('admin-auth-error')?.classList.remove('hidden');
+        document.getElementById('admin-auth-error').classList.remove('hidden');
     }
 }
 
-// Enter Key listener for Password Input
-document.getElementById('admin-pass-input')?.addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-        verifyAdminPassword();
-    }
-});
-
-// Admin Panel Toggle Functions
+// Admin Customization Panel Logic
 function openAdminPanel() {
-    const panel = document.getElementById('admin-panel-modal');
-    if (panel) {
-        panel.classList.remove('hidden');
-        panel.classList.add('flex');
-    }
+    const modal = document.getElementById('admin-panel-modal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
     
-    document.getElementById('edit-logo-text').value = document.getElementById('site-logo')?.innerHTML || '';
-    document.getElementById('edit-badge-text').value = document.getElementById('badge-pill')?.innerText.trim() || '';
-    document.getElementById('edit-expertise-heading').value = document.getElementById('core-expertise-heading')?.innerHTML || '';
-    document.getElementById('edit-about-bio').value = document.getElementById('about-bio-text')?.innerText || '';
-    document.getElementById('edit-contact-email').value = document.getElementById('contact-email-link')?.innerText || '';
-    document.getElementById('edit-linkedin-url').value = document.getElementById('linkedin-link')?.href || '';
-    document.getElementById('edit-profile-photo').value = document.getElementById('profile-img')?.getAttribute('src') || '';
+    document.getElementById('edit-logo-text').value = document.getElementById('site-logo').innerText;
+    document.getElementById('edit-badge-text').value = document.getElementById('badge-pill').innerText.trim();
+    document.getElementById('edit-expertise-heading').value = document.getElementById('core-expertise-heading').innerText;
+    document.getElementById('edit-about-bio').value = document.getElementById('about-bio-text').innerText;
+    document.getElementById('edit-contact-email').value = document.getElementById('contact-email-link').innerText;
+    document.getElementById('edit-linkedin-url').value = document.getElementById('linkedin-link').href;
+    document.getElementById('edit-profile-photo').value = document.getElementById('profile-img').getAttribute('src');
 }
 
 function closeAdminPanel() {
-    const panel = document.getElementById('admin-panel-modal');
-    if (panel) {
-        panel.classList.add('hidden');
-        panel.classList.remove('flex');
-    }
+    const modal = document.getElementById('admin-panel-modal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
 }
 
 function saveAdminCustomizations(e) {
@@ -117,10 +85,8 @@ function saveAdminCustomizations(e) {
     if (newBio) document.getElementById('about-bio-text').innerText = newBio;
     if (newEmail) {
         const emailLink = document.getElementById('contact-email-link');
-        if (emailLink) {
-            emailLink.innerText = newEmail;
-            emailLink.href = `mailto:${newEmail}`;
-        }
+        emailLink.innerText = newEmail;
+        emailLink.href = `mailto:${newEmail}`;
     }
     if (newLinkedin) document.getElementById('linkedin-link').href = newLinkedin;
     if (newPhoto) document.getElementById('profile-img').src = newPhoto;
@@ -142,10 +108,40 @@ function saveAdminCustomizations(e) {
     localStorage.setItem('ab_portfolio_customizations', JSON.stringify(customizationData));
 
     closeAdminPanel();
+    alert('Website customizations saved successfully!');
 }
 
-// Startup Persistence Listener
-window.addEventListener('DOMContentLoaded', () => {
+// DOM Event Listeners & Startup Initialization
+document.addEventListener('DOMContentLoaded', () => {
+    // Theme Toggle Handler
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark');
+            document.documentElement.classList.toggle('light', !isDark);
+            if (themeIcon) {
+                themeIcon.className = isDark ? 'fa-solid fa-moon text-base' : 'fa-solid fa-sun text-base';
+            }
+            localStorage.setItem('ab_theme', isDark ? 'dark' : 'light');
+        });
+    }
+
+    // Restore Saved Theme
+    if (localStorage.getItem('ab_theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+        if (themeIcon) themeIcon.className = 'fa-solid fa-sun text-base';
+    }
+
+    // Mobile Menu Button Event
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    if (mobileBtn) {
+        mobileBtn.addEventListener('click', toggleMobileMenu);
+    }
+
+    // Restore Saved Customizations
     const savedData = localStorage.getItem('ab_portfolio_customizations');
     if (savedData) {
         try {
@@ -156,10 +152,8 @@ window.addEventListener('DOMContentLoaded', () => {
             if (data.bio) document.getElementById('about-bio-text').innerText = data.bio;
             if (data.email) {
                 const emailLink = document.getElementById('contact-email-link');
-                if (emailLink) {
-                    emailLink.innerText = data.email;
-                    emailLink.href = `mailto:${data.email}`;
-                }
+                emailLink.innerText = data.email;
+                emailLink.href = `mailto:${data.email}`;
             }
             if (data.linkedin) document.getElementById('linkedin-link').href = data.linkedin;
             if (data.photo) document.getElementById('profile-img').src = data.photo;
@@ -169,5 +163,47 @@ window.addEventListener('DOMContentLoaded', () => {
         } catch (e) {
             console.error('Error parsing stored customizations', e);
         }
+    }
+
+    // Formspree Contact Form Submission Handler
+    const contactForm = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+    const submitBtn = document.getElementById('submit-btn');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Sending Inquiry...`;
+
+            const data = new FormData(event.target);
+
+            try {
+                const response = await fetch(event.target.action, {
+                    method: contactForm.method,
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    formStatus.className = "p-4 rounded-xl text-center text-sm font-medium bg-emerald-500/10 text-brand-500 border border-brand-500/20";
+                    formStatus.innerHTML = "<i class='fa-solid fa-circle-check'></i> Thank you! Your message has been sent successfully to Aliganyira Barnabus Joses.";
+                    contactForm.reset();
+                } else {
+                    formStatus.className = "p-4 rounded-xl text-center text-sm font-medium bg-red-500/10 text-red-400 border border-red-500/20";
+                    formStatus.innerHTML = "<i class='fa-solid fa-circle-exclamation'></i> Problem submitting form. Please check network.";
+                }
+            } catch (error) {
+                formStatus.className = "p-4 rounded-xl text-center text-sm font-medium bg-red-500/10 text-red-400 border border-red-500/20";
+                formStatus.innerHTML = "<i class='fa-solid fa-circle-exclamation'></i> Network error. Please try again.";
+            } finally {
+                formStatus.classList.remove('hidden');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Send Message Directly`;
+            }
+        });
     }
 });
