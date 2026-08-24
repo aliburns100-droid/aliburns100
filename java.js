@@ -1,11 +1,10 @@
-// Admin Password Store (Client-side state)
 let adminPassword = localStorage.getItem('ab_admin_password') || 'admin123';
 
-// Function updating site text by unique IDs
+// Fixed Header Update Function preserving HTML styling
 function updateSiteHeader(logoText, badgeText, headingText) {
     if (logoText) {
         const logoEl = document.getElementById('site-logo');
-        if (logoEl) logoEl.innerText = logoText;
+        if (logoEl) logoEl.innerHTML = logoText;
     }
     if (badgeText) {
         const badgeEl = document.getElementById('badge-pill');
@@ -13,19 +12,18 @@ function updateSiteHeader(logoText, badgeText, headingText) {
     }
     if (headingText) {
         const headingEl = document.getElementById('core-expertise-heading');
-        if (headingEl) headingEl.innerText = headingText;
+        if (headingEl) headingEl.innerHTML = headingText;
     }
 }
 
-// Mobile Navigation Toggle
+// Navigation & Theme Toggles
 function toggleMobileMenu() {
     const menu = document.getElementById('mobile-menu');
-    menu?.classList.toggle('hidden');
+    if (menu) menu.classList.toggle('hidden');
 }
 
 document.getElementById('mobile-menu-btn')?.addEventListener('click', toggleMobileMenu);
 
-// Dark / Light Mode Switcher
 const themeToggleBtn = document.getElementById('theme-toggle');
 const themeIcon = document.getElementById('theme-icon');
 
@@ -36,21 +34,28 @@ themeToggleBtn?.addEventListener('click', () => {
     localStorage.setItem('ab_theme', isDark ? 'dark' : 'light');
 });
 
-// Initialize Theme from localStorage
 if (localStorage.getItem('ab_theme') === 'light') {
     document.documentElement.classList.remove('dark');
     document.documentElement.classList.add('light');
     if (themeIcon) themeIcon.className = 'fa-solid fa-sun text-base';
 }
 
-// Admin Auth Modal Functions
+// Admin Auth Modal Functions with class switching
 function openAdminAuthModal() {
-    document.getElementById('admin-auth-modal')?.classList.remove('hidden');
+    const modal = document.getElementById('admin-auth-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
     document.getElementById('admin-auth-error')?.classList.add('hidden');
 }
 
 function closeAdminAuthModal() {
-    document.getElementById('admin-auth-modal')?.classList.add('hidden');
+    const modal = document.getElementById('admin-auth-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
 }
 
 function verifyAdminPassword() {
@@ -63,14 +68,24 @@ function verifyAdminPassword() {
     }
 }
 
-// Expanded Admin Customization Panel Logic
+// Enter Key listener for Password Input
+document.getElementById('admin-pass-input')?.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        verifyAdminPassword();
+    }
+});
+
+// Admin Panel Toggle Functions
 function openAdminPanel() {
-    document.getElementById('admin-panel-modal')?.classList.remove('hidden');
+    const panel = document.getElementById('admin-panel-modal');
+    if (panel) {
+        panel.classList.remove('hidden');
+        panel.classList.add('flex');
+    }
     
-    // Populate form with current values
-    document.getElementById('edit-logo-text').value = document.getElementById('site-logo')?.innerText || '';
+    document.getElementById('edit-logo-text').value = document.getElementById('site-logo')?.innerHTML || '';
     document.getElementById('edit-badge-text').value = document.getElementById('badge-pill')?.innerText.trim() || '';
-    document.getElementById('edit-expertise-heading').value = document.getElementById('core-expertise-heading')?.innerText || '';
+    document.getElementById('edit-expertise-heading').value = document.getElementById('core-expertise-heading')?.innerHTML || '';
     document.getElementById('edit-about-bio').value = document.getElementById('about-bio-text')?.innerText || '';
     document.getElementById('edit-contact-email').value = document.getElementById('contact-email-link')?.innerText || '';
     document.getElementById('edit-linkedin-url').value = document.getElementById('linkedin-link')?.href || '';
@@ -78,7 +93,11 @@ function openAdminPanel() {
 }
 
 function closeAdminPanel() {
-    document.getElementById('admin-panel-modal')?.classList.add('hidden');
+    const panel = document.getElementById('admin-panel-modal');
+    if (panel) {
+        panel.classList.add('hidden');
+        panel.classList.remove('flex');
+    }
 }
 
 function saveAdminCustomizations(e) {
@@ -123,10 +142,9 @@ function saveAdminCustomizations(e) {
     localStorage.setItem('ab_portfolio_customizations', JSON.stringify(customizationData));
 
     closeAdminPanel();
-    alert('Website customizations applied and saved successfully!');
 }
 
-// Load persisted customization on startup
+// Startup Persistence Listener
 window.addEventListener('DOMContentLoaded', () => {
     const savedData = localStorage.getItem('ab_portfolio_customizations');
     if (savedData) {
@@ -151,45 +169,5 @@ window.addEventListener('DOMContentLoaded', () => {
         } catch (e) {
             console.error('Error parsing stored customizations', e);
         }
-    }
-});
-
-// Interactive Formspree Form Handler
-const contactForm = document.getElementById('contact-form');
-const formStatus = document.getElementById('form-status');
-const submitBtn = document.getElementById('submit-btn');
-
-contactForm?.addEventListener('submit', async function(event) {
-    event.preventDefault();
-    
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Sending Inquiry...`;
-
-    const data = new FormData(event.target);
-
-    try {
-        const response = await fetch(event.target.action, {
-            method: contactForm.method,
-            body: data,
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-
-        if (response.ok) {
-            formStatus.className = "p-4 rounded-xl text-center text-sm font-medium bg-emerald-500/10 text-brand-500 border border-brand-500/20";
-            formStatus.innerHTML = "<i class='fa-solid fa-circle-check'></i> Thank you! Your message has been sent successfully to Aliganyira Barnabus Joses. I will respond shortly.";
-            contactForm.reset();
-        } else {
-            formStatus.className = "p-4 rounded-xl text-center text-sm font-medium bg-red-500/10 text-red-400 border border-red-500/20";
-            formStatus.innerHTML = "<i class='fa-solid fa-circle-exclamation'></i> Oops! There was a problem submitting your form. Please check your network and try again.";
-        }
-    } catch (error) {
-        formStatus.className = "p-4 rounded-xl text-center text-sm font-medium bg-red-500/10 text-red-400 border border-red-500/20";
-        formStatus.innerHTML = "<i class='fa-solid fa-circle-exclamation'></i> Network error. Please try sending again.";
-    } finally {
-        formStatus.classList.remove('hidden');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Send Message Directly`;
     }
 });
