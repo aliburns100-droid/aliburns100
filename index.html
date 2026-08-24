@@ -14,7 +14,7 @@
     <!-- Open Graph / Social Media -->
     <meta property="og:title" content="Aliganyira Barnabus Joses | Cybersecurity & AI Portfolio">
     <meta property="og:description" content="Cybersecurity Engineering & Artificial Intelligence Data Analysis Portfolio.">
-    <meta property="og:image" content="images/photo1.jpg">
+    <meta property="og:image" content="my-photo.jpg">
     <meta property="og:type" content="website">
 
     <!-- Tailwind CSS CDN -->
@@ -49,19 +49,17 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Custom External Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <!-- Custom External CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-brand-dark text-slate-100 transition-all duration-300 antialiased selection:bg-brand-500 selection:text-white" id="dynamic-bg">
 
     <!-- HEADER / LIQUID NAVIGATION BAR -->
     <header class="fixed top-4 inset-x-0 z-50 max-w-6xl mx-auto px-4">
         <nav class="liquid-nav rounded-2xl px-5 py-3 flex items-center justify-between transition-all duration-300">
-            
-            <!-- Dynamic Editable Logo -->
             <a href="#home" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-500 to-brand-blue flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-105 transition-transform overflow-hidden">
-                    <img src="images/logo.png" alt="Logo" class="w-full h-full object-cover" onerror="this.remove(); this.parentElement.innerText='AB';">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-500 to-brand-blue flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-105 transition-transform">
+                    AB
                 </div>
                 <span id="site-logo" class="font-bold text-lg tracking-tight text-white dark:text-white hover:text-brand-500 transition-colors">
                     Barnabus<span class="text-brand-500">.tech</span>
@@ -77,7 +75,7 @@
                 <li><a href="#contact" class="hover:text-brand-500 transition-colors">Contact</a></li>
             </ul>
 
-            <!-- Right Controls -->
+            <!-- Controls -->
             <div class="flex items-center gap-3">
                 <span id="badge-pill" class="hidden lg:inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-500/10 text-brand-500 border border-brand-500/20">
                     <span class="w-2 h-2 rounded-full bg-brand-500 animate-ping"></span>
@@ -108,10 +106,10 @@
         </div>
     </header>
 
-    <!-- MAIN CONTENT CONTAINERS -->
+    <!-- MAIN CONTENT -->
     <main class="max-w-6xl mx-auto px-4 pt-32 pb-20 space-y-32">
 
-        <!-- HOME SECTION -->
+        <!-- HERO SECTION -->
         <section id="home" class="min-h-[80vh] flex flex-col md:flex-row items-center justify-between gap-12 pt-8">
             <div class="flex-1 space-y-6 text-center md:text-left">
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono bg-slate-800/80 border border-slate-700 text-brand-blue">
@@ -151,16 +149,15 @@
                 </div>
             </div>
 
-            <!-- Profile Image Area -->
             <div class="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 flex-shrink-0">
                 <div class="absolute inset-0 bg-gradient-to-tr from-brand-500 to-brand-blue rounded-3xl rotate-6 blur-lg opacity-40 animate-pulse"></div>
                 <div class="relative w-full h-full rounded-3xl overflow-hidden border-2 border-slate-700 bg-slate-900 shadow-2xl">
-                    <img id="profile-img" src="images/photo1.jpg" alt="Aliganyira Barnabas" class="w-full h-full object-cover object-center" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop'">
+                    <img id="profile-img" src="my-photo.jpg" alt="Aliganyira Barnabas" class="w-full h-full object-cover object-center" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop'">
                 </div>
             </div>
         </section>
 
-        <!-- WHY WORK WITH ME -->
+        <!-- WHY PARTNER -->
         <section class="liquid-nav rounded-3xl p-8 md:p-12 border border-slate-800 space-y-6">
             <h2 class="text-2xl font-bold text-white text-center">Why Partner With Me?</h2>
             <div class="grid md:grid-cols-3 gap-8">
@@ -481,14 +478,14 @@
                 <i class="fa-solid fa-xmark"></i>
             </button>
             <div class="text-center space-y-2">
-                <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-500 items-center justify-center mx-auto text-xl">
+                <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center mx-auto text-xl">
                     <i class="fa-solid fa-user-shield"></i>
                 </div>
                 <h3 class="text-xl font-bold text-white">Administrator Access</h3>
                 <p class="text-xs text-slate-400">Enter the security key to open live content customization controls.</p>
             </div>
             <div class="space-y-4">
-                <input type="password" id="admin-pass-input" placeholder="Enter admin password (default: Burna123)" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:outline-none focus:border-brand-500">
+                <input type="password" id="admin-pass-input" placeholder="Enter admin password (default: admin123)" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:outline-none focus:border-brand-500">
                 <button onclick="verifyAdminPassword()" class="w-full py-3 rounded-xl font-bold bg-brand-500 text-slate-950 hover:bg-brand-600 transition-colors">
                     Unlock Admin Controls
                 </button>
@@ -501,7 +498,7 @@
     <div id="admin-panel-modal" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 overflow-y-auto">
         <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-2xl w-full my-8 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between border-b border-slate-800 pb-4">
-                <h3 class="text-xl font-bold text-white items-center gap-2">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2">
                     <i class="fa-solid fa-sliders text-brand-500"></i> Admin Customization System
                 </h3>
                 <button onclick="closeAdminPanel()" class="text-slate-400 hover:text-white text-xl">
@@ -510,6 +507,7 @@
             </div>
 
             <form id="admin-customization-form" onsubmit="saveAdminCustomizations(event)" class="space-y-6 text-sm">
+                
                 <div class="space-y-4">
                     <h4 class="font-mono text-xs uppercase text-brand-500 font-semibold border-b border-slate-800 pb-1">Branding & Headers</h4>
                     <div class="grid sm:grid-cols-2 gap-4">
@@ -537,7 +535,7 @@
                         </div>
                         <div>
                             <label class="block text-xs text-slate-400 mb-1">Profile Photo Path/URL</label>
-                            <input type="text" id="edit-profile-photo" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white" placeholder="images/photo1.jpg">
+                            <input type="text" id="edit-profile-photo" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white" placeholder="my-photo.jpg">
                         </div>
                     </div>
                 </div>
